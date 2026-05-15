@@ -173,6 +173,23 @@ const pedidoRepository = {
         );
 
         return rows;
+    },
+    
+    editarStatus: async (pedido) => {
+
+        const [result] = await connection.execute(
+            `
+            UPDATE pedidos
+            SET StatusPedido = ?
+            WHERE Id = ?
+            `,
+            [
+                pedido.statusPedido,
+                pedido.id
+            ]
+        );
+
+        return result;
     }
 
 }

@@ -6,6 +6,7 @@ const pedidoRoutes = Router();
 
 pedidoRoutes.post('/', pedidoController.criar);
 pedidoRoutes.get('/', pedidoController.selecionar);
-pedidoRoutes.get('/:id', pedidoController.selecionarPorId)
+pedidoRoutes.get('/:id', pedidoController.selecionarPorId);
+pedidoRoutes.put('/:id', pedidoController.editar);
 
 export default pedidoRoutes;

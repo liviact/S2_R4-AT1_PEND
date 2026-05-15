@@ -85,6 +85,38 @@ const pedidoController = {
                 error: error.message
             });
         }
+    },
+
+    editar: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const { statusPedido } = req.body;
+
+            const pedido = Pedido.editar(
+                {
+                    valorTotal: 0,
+                    statusPedido
+                },
+                id
+            );
+
+            const result =
+                await pedidoRepository.editarStatus(pedido);
+
+            res.status(200).json({
+                message: "Status atualizado",
+                result
+            });
+
+        } catch (error) {
+
+            res.status(500).json({
+                error: error.message
+            });
+        }
     }
 }
 
