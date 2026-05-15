@@ -112,6 +112,36 @@ const pedidoRepository = {
         }
     },
 
+    selecionar: async () => {
+
+        const [rows] = await connection.execute(
+            `
+            SELECT
+                p.Id,
+                p.DataPedido,
+                p.ValorTotal,
+                p.StatusPedido,
+
+                i.Id AS ItemId,
+                i.ProdutoId,
+                pr.Nome AS Produto,
+                i.Quantidade,
+                i.ValorItem,
+                i.SubTotal
+
+            FROM pedidos p
+
+            LEFT JOIN itens_pedidos i
+                ON i.PedidoId = p.Id
+
+            LEFT JOIN produtos pr
+                ON pr.Id = i.ProdutoId
+            `
+        );
+
+        return rows;
+    },
+
 }
 
 export default pedidoRepository
