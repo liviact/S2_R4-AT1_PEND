@@ -82,6 +82,44 @@ const categoriaController = {
                 error: error.message
             });
         }
+    },
+
+    selecionar: async (req, res) => {
+
+        try {
+
+            const result = await categoriaRepository.selecionar();
+
+            res.status(200).json(result);
+
+        } catch (error) {
+
+            console.log(error);
+
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    },
+
+    selecionarPorId: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const result = await categoriaRepository.selecionarPorId(id);
+
+            res.status(200).json(result);
+
+        } catch (error) {
+
+            console.log(error);
+
+            res.status(500).json({
+                error: error.message
+            });
+        }
     }
 };
 

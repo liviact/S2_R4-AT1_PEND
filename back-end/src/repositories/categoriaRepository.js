@@ -46,7 +46,33 @@ const categoriaRepository = {
         const [result] = await connection.execute(sql, [id]);
 
         return result;
+    },
+
+    selecionar: async () => {
+
+        const sql = `
+            SELECT *
+            FROM categorias
+        `;
+
+        const [rows] = await connection.execute(sql);
+
+        return rows;
+    },
+
+    selecionarPorId: async (id) => {
+
+        const sql = `
+            SELECT *
+            FROM categorias
+            WHERE Id = ?
+        `;
+
+        const [rows] = await connection.execute(sql, [id]);
+
+        return rows[0];
     }
+
 };
 
 export default categoriaRepository;
