@@ -8,6 +8,6 @@ import categoriaRoutes from "./categoriaRoutes.js";
 
 routes.use('/produtos', produtoRoutes)
 routes.use('/pedidos', pedidoRoutes)
-routes.use('/categorias', categoriaRoutes)
+routes.use('/categoria', categoriaRoutes)
 
 export default routes
