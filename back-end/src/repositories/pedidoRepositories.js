@@ -113,3 +113,5 @@ const pedidoRepository = {
     },
 
 }
+
+export default pedidoRepository
