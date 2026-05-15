@@ -174,7 +174,7 @@ const pedidoRepository = {
 
         return rows;
     },
-    
+
     editarStatus: async (pedido) => {
 
         const [result] = await connection.execute(
@@ -190,6 +190,72 @@ const pedidoRepository = {
         );
 
         return result;
+    },
+
+     deletar: async (id) => {
+
+        const conn = await connection.getConnection();
+
+        try {
+
+            await conn.beginTransaction();
+
+            // devolver estoque
+            const [itens] = await conn.execute(
+                `
+                SELECT ProdutoId, Quantidade
+                FROM itens_pedidos
+                WHERE PedidoId = ?
+                `,
+                [id]
+            );
+
+            for (const item of itens) {
+
+                await conn.execute(
+                    `
+                    UPDATE produtos
+                    SET Estoque = Estoque + ?
+                    WHERE Id = ?
+                    `,
+                    [
+                        item.Quantidade,
+                        item.ProdutoId
+                    ]
+                );
+            }
+
+            await conn.execute(
+                `
+                DELETE FROM itens_pedidos
+                WHERE PedidoId = ?
+                `,
+                [id]
+            );
+
+            await conn.execute(
+                `
+                DELETE FROM pedidos
+                WHERE Id = ?
+                `,
+                [id]
+            );
+
+            await conn.commit();
+
+            return {
+                message: "Pedido removido com sucesso"
+            };
+
+        } catch (error) {
+
+            await conn.rollback();
+            throw error;
+
+        } finally {
+
+            conn.release();
+        }
     }
 
 }
