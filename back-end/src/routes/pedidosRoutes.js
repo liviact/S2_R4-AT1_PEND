@@ -5,6 +5,7 @@ import pedidoController from "../controllers/pedidoController.js";
 const pedidoRoutes = Router();
 
 pedidoRoutes.post('/', pedidoController.criar);
-pedidoRoutes.get('/', pedidoController.selecionar)
+pedidoRoutes.get('/', pedidoController.selecionar);
+pedidoRoutes.get('/:id', pedidoController.selecionarPorId)
 
 export default pedidoRoutes;

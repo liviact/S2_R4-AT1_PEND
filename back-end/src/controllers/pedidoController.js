@@ -68,6 +68,24 @@ const pedidoController = {
             });
         }
     },
+    selecionarPorId: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const result =
+                await pedidoRepository.selecionarPorId(id);
+
+            res.status(200).json(result);
+
+        } catch (error) {
+
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    }
 }
 
 export default pedidoController;
