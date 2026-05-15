@@ -34,6 +34,18 @@ const categoriaRepository = {
         const [result] = await connection.execute(sql, values);
 
         return result;
+    },
+
+    deletar: async (id) => {
+
+        const sql = `
+            DELETE FROM categorias
+            WHERE Id = ?
+        `;
+
+        const [result] = await connection.execute(sql, [id]);
+
+        return result;
     }
 };
 

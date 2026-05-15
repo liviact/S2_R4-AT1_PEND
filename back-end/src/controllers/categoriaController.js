@@ -59,6 +59,29 @@ const categoriaController = {
                 error: error.message
             });
         }
+    },
+    
+    deletar: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const result = await categoriaRepository.deletar(id);
+
+            res.status(200).json({
+                message: "Categoria removida com sucesso",
+                result
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            res.status(500).json({
+                error: error.message
+            });
+        }
     }
 };
 
