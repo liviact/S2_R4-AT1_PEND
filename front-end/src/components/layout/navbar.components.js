@@ -4,7 +4,7 @@ export default function criarNavbar() {
 
     const nav = document.createElement('nav');
 
-    nav.className = 'navbar navbar-expand-lg bg-light shadow-sm';
+    nav.className = 'navbar navbar-expand-lg';
 
     nav.innerHTML = `
     
@@ -26,43 +26,41 @@ export default function criarNavbar() {
         </button>
 
         <!-- Menu -->
-        <div class="collapse navbar-collapse justify-content-center" id="menu">
+        <div class="collapse navbar-collapse justify-content-end" id="menu">
 
-            <ul class="navbar-nav mb-2 mb-lg-0">
+            <div class="navbar-actions">
 
-                <li class="nav-item">
-                    <button 
-                        class="nav-link active fw-bold text-primary" 
-                        id="btnProdutos"
+                <!-- Botão Produtos -->
+                <button 
+                    class="nav-link active fw-bold text-primary"
+                    id="btnProdutos"
+                >
+                    Produtos
+                </button>
+
+                <!-- Pesquisa -->
+                <form class="d-flex">
+
+                    <input 
+                        class="form-control" 
+                        type="search" 
+                        placeholder="Pesquisar produtos"
+                        id="inputSearch"
                     >
-                        Produtos
-                    </button>
-                </li>
 
-                <li class="nav-item">
-                    <button 
-                        class="nav-link" 
-                        id="btnCarrinho"
-                    >
-                        Carrinho
-                    </button>
-                </li>
+                </form>
 
-            </ul>
+                <!-- Carrinho -->
+                <button 
+                    class="nav-link"
+                    id="btnCarrinho"
+                >
+                    🛒
+                </button>
+
+            </div>
 
         </div>
-
-        <!-- Pesquisa -->
-        <form class="d-flex">
-
-            <input 
-                class="form-control" 
-                type="search" 
-                placeholder="Pesquisar produtos"
-                id="inputSearch"
-            >
-
-        </form>
 
     </div>
     `;
