@@ -1,5 +1,5 @@
 import pedidoRepository from "../repositories/pedidoRepositories.js";
-import { Pedido } from "../models/Pedidos.js"
+import { Pedido } from "../models/Pedido.js"
 import { ItensPedido } from "../models/ItensPedido.js";
 
 // import { Pedido } from "../models/Pedidos.js";
