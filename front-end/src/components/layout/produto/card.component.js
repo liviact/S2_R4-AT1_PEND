@@ -3,7 +3,7 @@ import {
     salvarCarrinho,
     removerCarrinho,
     produtoNoCarrinho
-} from '../../storage/carrinho/carrinho.storage.js';
+} from '../../../storage/carrinho/carrinho.storage.js';
 
 export default function criarCardProduto(produto) {
 

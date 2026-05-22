@@ -40,7 +40,7 @@ export class ItensPedido {
     get pedidoId() {
         return this.#pedidoId;
     }
-
+ 
     set pedidoId(value) {
 
         if (value !== null && value <= 0) {

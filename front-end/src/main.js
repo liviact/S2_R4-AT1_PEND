@@ -1,12 +1,12 @@
 import criarNavbar, { ativarMenu } from "./components/layout/navbar.components.js";
 
-import { produtosPage } from "./pages/produtos/produtos.page.js";
-import { carrinhoPage } from "./pages/carrinho/carrinho.page.js";
+import { produtoPage } from '../src/pages/produtos.page.js'
+import { carrinhoPage } from "../src/pages/carrinho.page.js";
 
 criarNavbar();
 
 // Página inicial
-produtosPage();
+produtoPage();
 
 // Botões do menu
 const btnProdutos = document.querySelector("#btnProdutos");
@@ -15,7 +15,7 @@ const btnCarrinho = document.querySelector("#btnCarrinho");
 //página de produtos aparece sem recarregar o site
 btnProdutos.addEventListener("click", () => {
   ativarMenu(btnProdutos);
-  produtosPage();
+  produtoPage();
 });
 
 //abre a página do carrinho 
