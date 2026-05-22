@@ -141,7 +141,7 @@ const pedidoRepository = {
 
         return rows;
     },
-    
+
     selecionarPorId: async (id) => {
 
         const [rows] = await connection.execute(
@@ -192,7 +192,177 @@ const pedidoRepository = {
         return result;
     },
 
-     deletar: async (id) => {
+     adicionarItem: async (pedidoId, item) => {
+
+        const conn = await connection.getConnection();
+
+        try {
+
+            await conn.beginTransaction();
+
+            const subTotalItem = item.quantidade * item.valorItem;
+
+            await conn.execute(
+                `INSERT INTO itens_pedidos 
+                (PedidoId, ProdutoId, Quantidade, ValorItem, SubTotal)
+                VALUES (?, ?, ?, ?, ?)`,
+                [
+                    pedidoId,
+                    item.produtoId,
+                    item.quantidade,
+                    item.valorItem,
+                    subTotalItem
+                ]
+            );
+
+            const [rows] = await conn.execute(
+                `SELECT SUM(SubTotal) AS total 
+                 FROM itens_pedidos 
+                 WHERE PedidoId = ?`,
+                [pedidoId]
+            );
+
+            const total = rows[0].total || 0;
+
+            await conn.execute(
+                `UPDATE pedidos 
+                 SET ValorTotal = ?
+                 WHERE Id = ?`,
+                [total, pedidoId]
+            );
+
+            await conn.commit();
+
+            return { message: "Item adicionado com sucesso" };
+
+        } catch (error) {
+
+            await conn.rollback();
+            throw error;
+
+        } finally {
+            conn.release();
+        }
+    },
+
+    editarItem: async (itemId, quantidade) => {
+
+        const conn = await connection.getConnection();
+
+        try {
+
+            await conn.beginTransaction();
+
+            const [itemRows] = await conn.execute(
+                `SELECT PedidoId, ValorItem
+                 FROM itens_pedidos
+                 WHERE Id = ?`,
+                [itemId]
+            );
+
+            if (!itemRows.length) {
+                throw new Error("Item não encontrado");
+            }
+
+            const pedidoId = itemRows[0].PedidoId;
+            const valorItem = itemRows[0].ValorItem;
+            const subTotal = quantidade * valorItem;
+
+            await conn.execute(
+                `UPDATE itens_pedidos 
+                 SET Quantidade = ?, SubTotal = ?
+                 WHERE Id = ?`,
+                [quantidade, subTotal, itemId]
+            );
+
+            const [rows] = await conn.execute(
+                `SELECT SUM(SubTotal) AS total
+                 FROM itens_pedidos
+                 WHERE PedidoId = ?`,
+                [pedidoId]
+            );
+
+            const total = rows[0].total || 0;
+
+            await conn.execute(
+                `UPDATE pedidos
+                 SET ValorTotal = ?
+                 WHERE Id = ?`,
+                [total, pedidoId]
+            );
+
+            await conn.commit();
+
+            return { message: "Item atualizado com sucesso" };
+
+        } catch (error) {
+
+            await conn.rollback();
+            throw error;
+
+        } finally {
+            conn.release();
+        }
+    },
+
+    deletarItem: async (itemId) => {
+
+        const conn = await connection.getConnection();
+
+        try {
+
+            await conn.beginTransaction();
+
+            const [pedido] = await conn.execute(
+                `SELECT PedidoId
+                 FROM itens_pedidos
+                 WHERE Id = ?`,
+                [itemId]
+            );
+
+            if (!pedido.length) {
+                throw new Error("Item não encontrado");
+            }
+
+            const pedidoId = pedido[0].PedidoId;
+
+            await conn.execute(
+                `DELETE FROM itens_pedidos
+                 WHERE Id = ?`,
+                [itemId]
+            );
+
+            const [rows] = await conn.execute(
+                `SELECT SUM(SubTotal) AS total
+                 FROM itens_pedidos
+                 WHERE PedidoId = ?`,
+                [pedidoId]
+            );
+
+            const total = rows[0].total || 0;
+
+            await conn.execute(
+                `UPDATE pedidos
+                 SET ValorTotal = ?
+                 WHERE Id = ?`,
+                [total, pedidoId]
+            );
+
+            await conn.commit();
+
+            return { message: "Item removido com sucesso" };
+
+        } catch (error) {
+
+            await conn.rollback();
+            throw error;
+
+        } finally {
+            conn.release();
+        }
+    },
+
+    deletar: async (id) => {
 
         const conn = await connection.getConnection();
 
@@ -257,7 +427,6 @@ const pedidoRepository = {
             conn.release();
         }
     }
+};
 
-}
-
-export default pedidoRepository
+export default pedidoRepository;
