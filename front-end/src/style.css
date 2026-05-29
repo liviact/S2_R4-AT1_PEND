@@ -121,31 +121,12 @@ body{
     box-shadow:0 10px 20px rgba(205, 99, 241, 0.3);
 }
 
-/* APP */
-#app{
-    max-width:1300px;
-    margin:auto;
-    padding:40px 20px;
-}
-
 /* TITULO */
 h1{
     font-size:2.6rem;
     font-weight:800;
     color:#ffffff;
     padding: 10px;
-}
-
-/* GRID DOS PRODUTOS */
-.row{
-    display:flex;
-    flex-wrap:wrap;
-}
-
-/* DUAS COLUNAS */
-.col-6{
-    width:50%;
-    padding:12px;
 }
 
 /* CARD */
@@ -174,14 +155,6 @@ h1{
     background:rgba(255,255,255,0.05);
 }
 
-/* BODY */
-.card-body{
-    padding:18px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
 .card-title{
     color:#e5e7eb;
     min-height:55px;
@@ -203,7 +176,7 @@ h1{
 }
 
 .btn-primary{
-    background:linear-gradient(135deg,#38bdf8,#6366f1);
+    background:linear-gradient(135deg,#b238f8,#a363f1);
 }
 
 .btn-success{
@@ -263,7 +236,7 @@ h1{
     margin-top:20px;
     padding:16px;
     border-radius:14px;
-    background:#6366f1;
+    background:#a363f1;
     color:white;
     display:flex;
     justify-content:space-between;
@@ -306,10 +279,5 @@ h1{
 
     h1{
         font-size:2rem;
-    }
-
-    /* 1 coluna no celular */
-    .col-6{
-        width:100%;
     }
 }

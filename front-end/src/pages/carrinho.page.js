@@ -19,7 +19,7 @@ export async function carrinhoPage() {
         <div class="carrinho-topo">
 
             <div>
-                <h1>🛒 Carrinho</h1>
+                <h1>Carrinho</h1>
 
                 <p class="info-carrinho">
                     ${quantidadeCarrinho()} itens

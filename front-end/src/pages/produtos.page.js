@@ -6,9 +6,9 @@ export async function produtoPage() {
     const app = document.querySelector('#app');
 
     app.innerHTML = `
-        <h1 class="fw-bold text-primary">🛍️ Produtos</h1>
+        <h1 class="fw-bold text-primary">Produtos</h1>
 
-        <div class="row mt-4" id="lista-produtos"></div>
+        <div class="row mt-4 mx-1" id="lista-produtos"></div>
     `;
 
     const row = document.querySelector('#lista-produtos');

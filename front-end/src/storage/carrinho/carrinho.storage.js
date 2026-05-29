@@ -1,27 +1,52 @@
 const CHAVE = 'carrinho';
 
-// Adicionar produto ao carrinho
-export function salvarCarrinho(produto) {
+
+// 🛒 ADICIONAR AO CARRINHO
+export function addCarrinho(produto) {
+
+    if (!produto || produto.Id == null) {
+
+        console.error(
+            "Produto inválido:",
+            produto
+        );
+
+        return;
+    }
 
     const carrinho = JSON.parse(
         localStorage.getItem(CHAVE) || '[]'
     );
 
+    // procura produto existente
     const itemExistente = carrinho.find(
-        item => item.Id === produto.Id
+        item => String(item.Id) === String(produto.Id)
     );
 
+    // ✔ se já existe → aumenta quantidade
     if (itemExistente) {
 
         itemExistente.quantidade += 1;
 
-    } else {
+    }
+
+    // ✔ novo produto
+    else {
 
         carrinho.push({
-            ...produto,
+
+            Id: produto.Id,
+
+            Nome: produto.Nome,
+
+            Preco: Number(produto.Preco),
+
+            Imagem: produto.Imagem,
+
+            Categoria: produto.Categoria,
+
             quantidade: 1
         });
-
     }
 
     localStorage.setItem(
@@ -30,13 +55,15 @@ export function salvarCarrinho(produto) {
     );
 }
 
-// Aumentar quantidade
+
+
+// ➕ AUMENTAR QUANTIDADE
 export function aumentarQuantidade(produto) {
 
     const carrinho = listarCarrinho();
 
     const item = carrinho.find(
-        item => item.Id === produto.Id
+        item => String(item.Id) === String(produto.Id)
     );
 
     if (item) {
@@ -50,13 +77,15 @@ export function aumentarQuantidade(produto) {
     }
 }
 
-// Diminuir quantidade
+
+
+// ➖ DIMINUIR QUANTIDADE
 export function diminuirQuantidade(produto) {
 
     const carrinho = listarCarrinho();
 
     const item = carrinho.find(
-        item => item.Id === produto.Id
+        item => String(item.Id) === String(produto.Id)
     );
 
     if (!item) return;
@@ -73,17 +102,21 @@ export function diminuirQuantidade(produto) {
     );
 }
 
-// Produto no carrinho
+
+
+// 🔍 VERIFICAR PRODUTO
 export function produtoNoCarrinho(produto) {
 
     const carrinho = listarCarrinho();
 
     return carrinho.some(
-        item => item.Id === produto.Id
+        item => String(item.Id) === String(produto.Id)
     );
 }
 
-// Listar carrinho
+
+
+// 📥 LISTAR CARRINHO
 export function listarCarrinho() {
 
     return JSON.parse(
@@ -91,13 +124,15 @@ export function listarCarrinho() {
     );
 }
 
-// Remover item
+
+
+// ❌ REMOVER ITEM
 export function removerCarrinho(produto) {
 
     const carrinho = listarCarrinho();
 
     const atualizado = carrinho.filter(
-        item => item.Id !== produto.Id
+        item => String(item.Id) !== String(produto.Id)
     );
 
     localStorage.setItem(
@@ -106,13 +141,17 @@ export function removerCarrinho(produto) {
     );
 }
 
-// Limpar
+
+
+// 🧹 LIMPAR CARRINHO
 export function limparCarrinho() {
 
     localStorage.removeItem(CHAVE);
 }
 
-// Quantidade total
+
+
+// QUANTIDADE TOTAL
 export function quantidadeCarrinho() {
 
     const carrinho = listarCarrinho();
@@ -124,7 +163,9 @@ export function quantidadeCarrinho() {
     }, 0);
 }
 
-// Valor total
+
+
+// 💰 TOTAL DO CARRINHO
 export function totalCarrinho() {
 
     const carrinho = listarCarrinho();

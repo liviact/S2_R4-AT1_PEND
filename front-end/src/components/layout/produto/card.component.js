@@ -1,10 +1,14 @@
 import criarImagemProduto from "./imagem.component.js";
 
 import {
-    salvarCarrinho,
     removerCarrinho,
     produtoNoCarrinho
 } from '../../../storage/carrinho/carrinho.storage.js';
+
+import {
+    criarAdicionarCarrinho,
+    criarComprarAgora
+} from "./button.component.js"
 
 export default function criarCardProduto(produto) {
 
@@ -61,50 +65,20 @@ export default function criarCardProduto(produto) {
     preco.innerText = `R$ ${produto.Preco}`;
 
     // Botão
-    const button = document.createElement('button');
+    const divButtons = document.createElement("div");
+    divButtons.className = 'd-flex gap-2 w-100';
 
-    let noCarrinho = produtoNoCarrinho(produto);
+    const buttonAdicionar = criarAdicionarCarrinho(produto);
+    const buttonComprar = criarComprarAgora(produto);
 
-    button.className = noCarrinho
-        ? 'btn btn-success mt-auto'
-        : 'btn btn-primary mt-auto';
-
-    button.innerText = noCarrinho
-        ? 'Adicionado'
-        : 'Adicionar ao carrinho';
-
-    // Evento botão
-    button.addEventListener('click', () => {
-
-        noCarrinho = !noCarrinho;
-
-        if (noCarrinho) {
-
-            salvarCarrinho(produto);
-
-            button.className =
-                'btn btn-success mt-auto';
-
-            button.innerText = 'Adicionado';
-
-        } else {
-
-            removerCarrinho(produto);
-
-            button.className =
-                'btn btn-primary mt-auto';
-
-            button.innerText =
-                'Adicionar ao carrinho';
-        }
-    });
+    divButtons.append(buttonAdicionar, buttonComprar);
 
     // Montagem
     cardBody.append(
         categoria,
         nome,
         preco,
-        button
+        divButtons
     );
 
     card.append(

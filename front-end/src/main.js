@@ -9,8 +9,8 @@ criarNavbar();
 produtoPage();
 
 // Botões do menu
-const btnProdutos = document.querySelector("#btnProdutos");
-const btnCarrinho = document.querySelector("#btnCarrinho");
+ export const btnProdutos = document.querySelector("#btnProdutos");
+ export const btnCarrinho = document.querySelector("#btnCarrinho");
 
 // página de produtos
 btnProdutos.addEventListener("click", () => {
@@ -28,3 +28,4 @@ btnCarrinho.addEventListener("click", () => {
     atualizarTotalCarrinho();
   }, 50);
 });
+

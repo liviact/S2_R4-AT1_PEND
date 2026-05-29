@@ -2,8 +2,7 @@ export default function criarColuna(){
 
     const coluna = document.createElement('div');
 
-    // 2 colunas por linha
-    coluna.className = 'col-6 mb-4';
+    coluna.className = 'col-12 col-md-6 col-lg-4 mb-4';
 
     return coluna;
 }
