@@ -75,7 +75,9 @@ body{
     padding:10px 14px;
 }
 
-.form-control::placeholder{color:#cbd5e1}
+.form-control::placeholder{
+    color:#cbd5e1;
+}
 
 .form-control:focus{
     border-color:#a78bfa;
@@ -95,9 +97,8 @@ body{
     position:relative;
     transition:.3s;
     margin-left:18px;
-
-    border:none;       
-    outline:none;      
+    border:none;
+    outline:none;
 }
 
 #btnCarrinho::before{
@@ -131,11 +132,22 @@ body{
 h1{
     font-size:2.6rem;
     font-weight:800;
-    color: #38bdf8;
-    
+    color:#38bdf8;
 }
 
-/* PRODUTOS */
+/* GRID DOS PRODUTOS */
+.row{
+    display:flex;
+    flex-wrap:wrap;
+}
+
+/* DUAS COLUNAS */
+.col-6{
+    width:50%;
+    padding:12px;
+}
+
+/* CARD */
 .produto-card{
     border:none;
     border-radius:20px;
@@ -143,6 +155,8 @@ h1{
     backdrop-filter:blur(10px);
     overflow:hidden;
     transition:.3s;
+    width:100%;
+    height:100%;
 }
 
 .produto-card:hover{
@@ -150,14 +164,16 @@ h1{
     box-shadow:0 20px 40px rgba(56,189,248,.15);
 }
 
+/* IMAGEM */
 .produto-img{
     width:100%;
-    height:260px;
+    height:320px;
     object-fit:contain;
     padding:20px;
     background:rgba(255,255,255,0.05);
 }
 
+/* BODY */
 .card-body{
     padding:18px;
     display:flex;
@@ -241,7 +257,7 @@ h1{
     color:#22c55e;
 }
 
-/* TOTAL CARD */
+/* TOTAL */
 .carrinho-total{
     margin-top:20px;
     padding:16px;
@@ -255,7 +271,7 @@ h1{
     font-weight:700;
 }
 
-/* EMPTY STATE */
+/* EMPTY */
 .col-12 p{
     background:rgba(255,255,255,0.06);
     padding:40px;
@@ -265,6 +281,7 @@ h1{
 
 /* RESPONSIVO */
 @media(max-width:768px){
+
     .navbar-actions{
         flex-direction:column;
         width:100%;
@@ -288,5 +305,10 @@ h1{
 
     h1{
         font-size:2rem;
+    }
+
+    /* 1 coluna no celular */
+    .col-6{
+        width:100%;
     }
 }
