@@ -1,26 +1,28 @@
 import {
     listarCarrinho,
     removerCarrinho,
+    limparCarrinho,
+    quantidadeCarrinho,
+    totalCarrinho,
+    aumentarQuantidade,
+    diminuirQuantidade
 } from '../storage/carrinho/carrinho.storage.js';
-
-import criarColuna from '../components/shared/coluna-bootstrap.component.js';
-import criarCardProduto from '../components/layout/produto/card.component.js';
 
 export async function carrinhoPage() {
 
     const app = document.querySelector('#app');
 
-    app.innerHTML = `
-        <div class="d-flex justify-content-between align-items-center">
-            
-            <div>
-                <h1 class="fw-bold text-success">
-                    🛒 Carrinho
-                </h1>
+    const produtos = listarCarrinho();
 
-                <p class="text-secondary m-0">
-                    Itens no carrinho:
-                    <span id="quantidade-carrinho"></span>
+    app.innerHTML = `
+    
+        <div class="carrinho-topo">
+
+            <div>
+                <h1>🛒 Carrinho</h1>
+
+                <p class="info-carrinho">
+                    ${quantidadeCarrinho()} itens
                 </p>
             </div>
 
@@ -30,115 +32,153 @@ export async function carrinhoPage() {
             >
                 Limpar Carrinho
             </button>
+
         </div>
 
-        <div class="mt-3">
-            <h4>
-                Total:
-                R$ <span id="total-carrinho"></span>
-            </h4>
+        <div class="carrinho-resumo">
+
+            <div class="resumo-card">
+                <span>Subtotal</span>
+                <strong>
+                    R$ ${totalCarrinho().toFixed(2)}
+                </strong>
+            </div>
+
+            <div class="resumo-card">
+                <span>Frete</span>
+                <strong>Grátis</strong>
+            </div>
+
+            <div class="resumo-total">
+                <span>Total</span>
+
+                <strong>
+                    R$ ${totalCarrinho().toFixed(2)}
+                </strong>
+            </div>
+
         </div>
 
-        <div class="row mt-4" id="lista-carrinho"></div>
+        <div class="row" id="lista-carrinho"></div>
     `;
 
-    const row = document.querySelector('#lista-carrinho');
+    const row =
+        document.querySelector('#lista-carrinho');
 
-    const quantidadeElement =
-        document.querySelector('#quantidade-carrinho');
-
-    const totalElement =
-        document.querySelector('#total-carrinho');
-
-    const botaoLimpar =
+    const btnLimpar =
         document.querySelector('#limpar-carrinho');
-
-    function atualizarResumo() {
-
-        quantidadeElement.textContent =
-            quantidadeCarrinho();
-
-        totalElement.textContent =
-            totalCarrinho().toFixed(2);
-    }
-
-    const produtos = listarCarrinho();
 
     if (produtos.length === 0) {
 
         row.innerHTML = `
+        
             <div class="col-12">
+
                 <p class="text-secondary fs-5">
                     Seu carrinho está vazio.
                 </p>
+
             </div>
         `;
-
-        atualizarResumo();
 
         return;
     }
 
     produtos.forEach(produto => {
 
-        const coluna = criarColuna();
+        const coluna =
+            document.createElement('div');
 
-        const card = criarCardProduto(produto);
+        coluna.className = 'col-6';
 
-        const button = card.querySelector('button');
+        coluna.innerHTML = `
+        
+            <div class="produto-card">
 
-        button.textContent = 'Remover';
+                <img
+                    class="produto-img"
+                    src="http://localhost:8000/uploads/imagens/${encodeURIComponent(produto.Imagem)}"
+                >
 
-        button.classList.remove(
-            'btn-outline-primary'
-        );
+                <div class="card-body">
 
-        button.classList.add(
-            'btn-outline-danger'
-        );
+                    <h5 class="card-title">
+                        ${produto.Nome}
+                    </h5>
 
-        button.addEventListener('click', () => {
+                    <p class="card-text">
+                        R$ ${produto.Preco}
+                    </p>
 
-            removerCarrinho(produto);
+                    <div class="quantidade-box">
 
-            coluna.remove();
+                        <button
+                            class="btn-qtd diminuir"
+                        >
+                            -
+                        </button>
 
-            atualizarResumo();
+                        <span>
+                            ${produto.quantidade}
+                        </span>
 
-            const itensRestantes =
-                listarCarrinho();
+                        <button
+                            class="btn-qtd aumentar"
+                        >
+                            +
+                        </button>
 
-            if (itensRestantes.length === 0) {
-
-                row.innerHTML = `
-                    <div class="col-12">
-                        <p class="text-secondary fs-5">
-                            Seu carrinho está vazio.
-                        </p>
                     </div>
-                `;
-            }
-        });
 
-        coluna.appendChild(card);
+                    <p class="subtotal-item">
+                        Subtotal:
+                        R$ ${(produto.Preco * produto.quantidade).toFixed(2)}
+                    </p>
+
+                    <button class="btn btn-danger remover">
+                        Remover
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        coluna.querySelector('.aumentar')
+            .addEventListener('click', () => {
+
+                aumentarQuantidade(produto);
+
+                carrinhoPage();
+
+            });
+
+        coluna.querySelector('.diminuir')
+            .addEventListener('click', () => {
+
+                diminuirQuantidade(produto);
+
+                carrinhoPage();
+
+            });
+
+        coluna.querySelector('.remover')
+            .addEventListener('click', () => {
+
+                removerCarrinho(produto);
+
+                carrinhoPage();
+
+            });
 
         row.appendChild(coluna);
     });
 
-    botaoLimpar.addEventListener('click', () => {
+    btnLimpar.addEventListener('click', () => {
 
         limparCarrinho();
 
-        row.innerHTML = `
-            <div class="col-12">
-                <p class="text-secondary fs-5">
-                    Seu carrinho está vazio.
-                </p>
-            </div>
-        `;
+        carrinhoPage();
 
-        atualizarResumo();
     });
-
-    atualizarResumo();
 }
