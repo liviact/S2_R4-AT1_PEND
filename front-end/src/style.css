@@ -13,7 +13,7 @@ body{
 
 /* NAVBAR */
 .navbar{
-    background:#1e283e;
+    background:#311e3e;
     backdrop-filter:blur(16px);
     border-bottom:1px solid rgba(255,255,255,0.08);
     padding:16px 30px;
@@ -25,7 +25,7 @@ body{
 .navbar-brand{
     font-size:2.8rem;
     font-weight:800;
-    color:#38bdf8;
+    color:#ececec;
 }
 
 .navbar-collapse{
@@ -60,7 +60,7 @@ body{
 }
 
 #btnProdutos.active{
-    background:linear-gradient(135deg,#38bdf8,#6366f1);
+    background:linear-gradient(135deg,#bb38f8,#d563f1);
     color:#fff;
     border:none;
 }
@@ -92,7 +92,7 @@ body{
     align-items:center;
     justify-content:center;
     border-radius:14px;
-    background:linear-gradient(135deg,#38bdf8,#6366f1);
+    background:linear-gradient(135deg,#bb38f8,#d563f1);
     font-size:1.4rem;
     position:relative;
     transition:.3s;
@@ -118,7 +118,7 @@ body{
 
 #btnCarrinho:hover{
     transform:scale(1.06);
-    box-shadow:0 10px 20px rgba(99,102,241,.3);
+    box-shadow:0 10px 20px rgba(205, 99, 241, 0.3);
 }
 
 /* APP */
@@ -132,7 +132,8 @@ body{
 h1{
     font-size:2.6rem;
     font-weight:800;
-    color:#38bdf8;
+    color:#ffffff;
+    padding: 10px;
 }
 
 /* GRID DOS PRODUTOS */
@@ -161,7 +162,7 @@ h1{
 
 .produto-card:hover{
     transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(56,189,248,.15);
+    box-shadow:0 20px 40px rgba(203, 56, 248, 0.15);
 }
 
 /* IMAGEM */
@@ -187,7 +188,7 @@ h1{
 }
 
 .card-text{
-    color:#22c55e;
+    color:#ffffff;
     font-size:1.6rem;
     font-weight:800;
 }
@@ -254,7 +255,7 @@ h1{
 
 .preco-item{
     font-weight:700;
-    color:#22c55e;
+    color:#ffffff;
 }
 
 /* TOTAL */
